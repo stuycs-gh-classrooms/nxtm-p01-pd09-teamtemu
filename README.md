@@ -1,7 +1,7 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/QTULg0OX)
 # NeXtCS Project 01
 ### thinker0: Nathaniel Moy
-### thinker1: Conner Meyer
+### thinker1: Connor Meyer
 ---
 
 ### Overview
@@ -43,6 +43,7 @@ What are some features that are not essential to the program, but you would like
 
 - Multiple balls (with collision detection)
 - Blocks that you can't hit
+- Chance for paddle to "break" = instant lose
 
 ### Array Usage
 How will you be using arrays in this project?
@@ -72,7 +73,7 @@ What classes will you be creating for this project? Include the instance variabl
 
 CLASS ball
 - Instance variables:
-  - PVector
+  - PVector(x,y)
   - Speed
   - Size
 - METHODS
@@ -80,8 +81,10 @@ CLASS ball
   - collisionDetect()
   - display()
 
-CLASS NAME1
+CLASS block
 - Instance variables:
-  - LIST INSTANCE VARS HERE
+  - PVector(x,y)
+  - Size
 - METHODS
-  - LIST METHODS HERE
+  - collisionDetect()
+  - display()
