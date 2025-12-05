@@ -1,12 +1,16 @@
 # NeXtCS Project 01
-### Period:  
-### Name0: YOUR NAME HERE
-### Name1: TEAMMATE NAME HERE (delete if working solo)
-#### Selected Game: YOUR GAME HERE
+### Period: 09 
+### Name0: Nathaniel Moy
+### Name1: Connor Meyer
+#### Selected Game: Breakout/Arkanoid [demo 0](https://elgoog.im/breakout/)  [demo 1](https://www.crazygames.com/game/atari-breakout)
+
+
 ---
 
 ### How To Play
 Explain how to play your game. Include any keyboard and/or mouse commands, game objectives, etc.
+
+how2play guide:
 
 
 ---
