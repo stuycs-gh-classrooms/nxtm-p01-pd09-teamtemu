@@ -26,6 +26,7 @@ class Ball {
 
       ballvector.y += yspeed;
       ballvector.x += xspeed;
+      fill(int(random(0,2))*255);
     }
   }
   
