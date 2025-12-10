@@ -4,11 +4,10 @@ class Ball {
   int xspeed, yspeed;
 
   Ball(int x, int y, int sp, int si) {
-    ballvector.x = x;
-    ballvector.y = y;
+    ballvector = new PVector(x,y);
     size = si;
-    xspeed = 1;
-    yspeed = 1;
+    xspeed = sp;
+    yspeed = sp;
   }
 
   void move() {
