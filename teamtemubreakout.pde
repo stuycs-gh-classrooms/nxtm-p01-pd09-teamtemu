@@ -3,8 +3,12 @@ Block[][] bGrid;
 Paddle p;
 PImage cellBars;
 boolean firstrun;
+boolean loss;
+int lives;
 
 void setup() {
+  lives = 5;
+  loss = false;
  bGrid = new Block[5][10]; //placeholder rows/collums
  p = new Paddle(width/2-100,height-25,200,25);
  size(1000,600);
@@ -22,6 +26,12 @@ void setup() {
 
 void draw() {
  background(random(0, 256), random(0,256), 0); 
+ if(loss == false){
+ textSize(100);
+ fill(0,0,(int)(Math.random()*255));
+ text("you need to BREAKOUT!", 0, 500);
+ textSize(50);
+ text(lives, width/2, 400);
  b1.move();
  b1.display();
  p.display();
@@ -29,6 +39,16 @@ void draw() {
  //println(bGrid.length);
  blockgrid(5,10);
  collisionDetect();
+ }
+ else{
+   background(0);
+   fill(255,0,0);
+   textSize(200);
+   text("YOU LOOSE", 0, height/2);
+   text("LOOZER", 0, height);
+   textSize(50);
+   text("press space to retry", width/2, height-200);
+ }
 }
 
 void blockgrid(int rows, int cols){
@@ -65,10 +85,35 @@ void collisionDetect(){
             }
           }
         }
-        }
       }
+      }
+         if(b1.ballvector.x > p.xp && b1.ballvector.x < p.xp+p.lp){
+            if(b1.ballvector.y > p.yp && b1.ballvector.y < p.yp+p.wp){
+             // println("collisionpaddle");
+              b1.xspeed += (random(-5,5));
+              b1.yspeed *= -1.01;
+            }
+         }
+          if(b1.ballvector.y > height + b1.size/2){
+            if(lives > 0){
+              lives -=1;
+              b1.ballvector.x = width/2;
+              b1.ballvector.y = height/2;
+            }
+            else{
+            loss = true;
+            }
+          }
+            
     }
 void keyPressed(){
+  if(key == ' ' && loss == true){
+    lives = 5;
+    loss = false;
+    b1.ballvector.x = width/2;
+    b1.ballvector.y = height/2;
+    firstrun = true;
+  }
   if(key == CODED){
     if(keyCode == LEFT){
       p.move(0);

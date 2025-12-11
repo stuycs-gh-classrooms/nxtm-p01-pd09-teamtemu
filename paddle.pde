@@ -19,12 +19,12 @@ class Paddle {
   void move(int direction){
     if(xp + lp <= width){
       if(direction == 1){
-        xp += 20;
+        xp += 50;
       }
     }
     if(xp > 0){
       if(direction == 0){
-        xp -= 20;
+        xp -= 50;
       }
     }
   }

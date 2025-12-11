@@ -13,8 +13,7 @@ class Ball {
   void move() {
     {
       //YOUR CODE HERE
-      if (ballvector.y >= height - size/2 || // if ball has made it all the way to bottom/top or somehow went past the border
-        ballvector.y <= size/2) {
+      if (ballvector.y <= size/2){ // if ball has made it all the way to top or somehow went past the border
         yspeed *= -1;
       }// up-down bounce
 
