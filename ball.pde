@@ -1,7 +1,7 @@
 class Ball {
-  PVector ballvector;
+  PVector ballvector; //vector of the balls position
   int size;
-  int xspeed, yspeed;
+  int xspeed, yspeed; //how much the x and y coordes will incriment each move
 
   Ball(int x, int y, int sp, int si) {
     ballvector = new PVector(x,y);
