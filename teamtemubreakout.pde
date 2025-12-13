@@ -1,33 +1,33 @@
 Ball b1;
 Block[][] bGrid;
 Paddle p;
-PImage cellBars; //just a stock image i found online
-boolean firstrun; //sees if its the first runthru of draw of that specific stage
-boolean loss; //boolean for wether or not you lost
-int lives; //how may lives you have levft
-boolean won; //sees if you won or jto
-int stage; //int what stage you are on affects speed of ball when hitting paddle
-boolean paused; //boolean for wether or not paused
+PImage cellBars; // Stock image found online
+boolean firstrun; // Specific stage first runthrough check
+boolean loss; // Loss state
+int lives; // Lives counter
+boolean won; // Win state
+int stage; // Stage counter for speed of ball
+boolean paused; // Pause state
 ChildApplet[] windows; // array of ChildApplet objects
 int variable; // helper for ChildApplet object generation
 int window = 0; // number of ChildApplet objects populating ChildApplet[]
-int numWindows = 100; // can be modifiable to change # of windows that open
+int numWindows = 5; // can be modifiable to change # of windows that open
 int green = 250; // variable amount for random chance to have a greener background, meaning game background gets progressively redder as you advance
 
-void setup() {
-  paused = false; //instantiates each global variable to thier deafualt
+void setup() { // instantiate all global variables to default values
+  paused = false;
   stage = 1;
   won = false;
   lives = 5;
   loss = false;
-  bGrid = new Block[5][10]; //makes a grid of block objects w 5 rows and 10 collums
-  p = new Paddle(width/2-100, height-25, 200, 25); //makes a paddle w these stats
+  bGrid = new Block[5][10]; // grid of block objects w/ 5 rows and 10 columns
+  p = new Paddle(width/2-100, height-25, 200, 25); // paddle object
   size(1000, 600);
   frameRate(30);
-  cellBars = loadImage("prisonBars.jpg"); //loads the cell bar image and attatches it to variable cell bars
-  b1 = new Ball(width/2, height/2, 10, 25); //makes a ball object
-  firstrun = true; //this variable is here to prevent draw from re-instantiating the entierety of all the blocks in bgrid every time it runs
-  //bGrid = new Block[rows][cols]; //placeholder rows/collums
+  cellBars = loadImage("prisonBars.jpg"); // loads cell bar image and points variable "cellBars" to it
+  b1 = new Ball(width/2, height/2, 10, 25); // ball object
+  firstrun = true; // prevent draw() from re-instantiating the entierety of all the blocks in bGrid every time it runs
+  //bGrid = new Block[rows][cols]; // placeholder rows/columns
   //blockgrid(5, 10);
   //println(bGrid.length);
   windows = new ChildApplet[numWindows];
@@ -38,23 +38,23 @@ void setup() {
 
 void draw() {
   if (paused == false) { //checks for pause FIRST
-    background(random(0, 256), random(0, green), 0); //epileptic background
+    background(random(0, 256), random(0, green), 0); // epileptic background
     if (won == false) {
       if (loss == false) {
-        textSize(100); //if neither win or loose then do allathis
+        textSize(100);
         fill(0, 0, (int)(Math.random()*255));
-        text("you need to BREAKOUT!", 0, 500);
+        text("you need to BREAK OUT!", 0, 500);
         textSize(50);
         text(lives, width/2, 400);
-        b1.move(); //nakes ball move
-        b1.display(); //displays the ball at correct coordinates
-        p.display(); //displays the paddle at correct coordinates
+        b1.move(); // ball movement
+        b1.display(); // ball display
+        p.display(); // paddle display
         //println(bGrid.length);
         //println(bGrid.length);
         blockgrid(5, 10);
-        collisionDetect(); //cgecs fir all colls8sons
+        collisionDetect(); // checks for any and all collisions
         winCheck(); // checks for wins
-      } else {//this is what happens if you LOOSE
+      } else {// if user LOSES
         background(0);
         fill(255, 0, 0);
         textSize(200);
@@ -64,7 +64,7 @@ void draw() {
         text("press space to retry", width/2, height-200);
         spawnVirus();
       }
-    } else {//this is what happens if you WIN
+    } else {// if user WINS
       background(0);
       fill(0, 255, 0);
       textSize(200);
@@ -77,20 +77,20 @@ void draw() {
 }
 
 void blockgrid(int rows, int cols) {
-  if (firstrun == true) { //only if the blocks have NOT been instantiated runs this part, i needed to intake rows and cols variable which is why this couldnt be just apart of setup...
+  if (firstrun == true) { // Checks if blocks have NOT been instantiated since rows and cols are required as attributes
     for (int row = 0; row < bGrid.length; row ++) {
       //println("g1p");
       for (int col = 0; col < bGrid[row].length; col ++) {
-        bGrid[row][col] = new Block(col*(width/cols), row*(height/2/rows), (width/cols), (height/2/rows)); //runs through each spot in the grid and makes a new block object there
-        firstrun = false; //makes it so this WONT happen again..........................................
+        bGrid[row][col] = new Block(col*(width/cols), row*(height/2/rows), (width/cols), (height/2/rows)); // Creates a new block object for every value in the bGrid 2D array
+        firstrun = false; // Prevents bGrid from being re-instantiated
       }
     }
   }
-  for (int row = 0; row < bGrid.length; row ++) {//this part displays what blocks there is on the screen
+  for (int row = 0; row < bGrid.length; row ++) {// Display existing blocks
     //   println("2g1p");
     for (int col = 0; col < bGrid[row].length; col ++) {
       //  println("2g2p");
-      if (bGrid[row][col] != null) { //makes sure theres a block their before it deisplays
+      if (bGrid[row][col] != null) { // Prevent NullPointerException
         bGrid[row][col].display();
       }
     }
@@ -101,7 +101,7 @@ void collisionDetect() {
   for (int row = 0; row < bGrid.length; row ++) {
     for (int col = 0; col < bGrid[row].length; col ++) {
       if (bGrid[row][col] != null) {
-        if (b1.ballvector.x > bGrid[row][col].blockvector.x && b1.ballvector.x < bGrid[row][col].blockvector.x+bGrid[row][col].siX) { //checks if the ball is touching a block
+        if (b1.ballvector.x > bGrid[row][col].blockvector.x && b1.ballvector.x < bGrid[row][col].blockvector.x+bGrid[row][col].siX) { // ball-block collision detection
           if (b1.ballvector.y > bGrid[row][col].blockvector.y && b1.ballvector.y < bGrid[row][col].blockvector.y+bGrid[row][col].siY) {
             //println("Collision!");
             bGrid[row][col] = null;
@@ -112,16 +112,16 @@ void collisionDetect() {
       }
     }
   }
-  if (b1.ballvector.x > p.xp && b1.ballvector.x < p.xp+p.lp) { //checks if the ball is thougching the paddle
+  if (b1.ballvector.x > p.xp && b1.ballvector.x < p.xp+p.lp) { // ball-paddle collision detection
     if (b1.ballvector.y >= p.yp) {
       //println("collisionpaddle");
-      b1.xspeed += (random(-5, 5)); //adds some variation to how the ball moves after hitting hte paddle
+      b1.xspeed += (random(-5, 5)); // randomize ball movement after bouncing off the paddle
       // println(b1.xspeed);
-      b1.yspeed *= (-1-(0.02*stage)); //basically this smakes the speed go up quicker if the stage is higher thus making higher stages harder!
+      b1.yspeed *= (-1-(0.02*stage)); // increase ball speed upon reaching higher stages
       //println(b1.yspeed);
     }
   }
-  if (b1.ballvector.y > height + b1.size/2) { //if touching the BAD edge..... loose a life if all lives gone you LOOSE.
+  if (b1.ballvector.y > height + b1.size/2) { // Life loss system if ball touches boundary
     if (lives > 0) {
       lives -=1;
       b1.ballvector.x = width/2;
@@ -132,47 +132,47 @@ void collisionDetect() {
   }
 }
 void keyPressed() {
-  if (key == ' ' && loss == true) { //resets the game if you are on loss screen
+  if (key == ' ' && loss == true) { // Game reset after a loss
     setup();
     lives = 5;
     loss = false;
-    b1.ballvector.x = width/2; //resets the ball position state
+    b1.ballvector.x = width/2; // Reset ball position
     b1.ballvector.y = height/2;
-    b1.xspeed = 10; //resets the ball speed
+    b1.xspeed = 10; // Reset ball speed
     b1.yspeed = 10;
-    firstrun = true; //makes it first run so each block gets instantiated again
+    firstrun = true; // Cause bGrid to be instantiated again
     stage = 1;
   }
-  if (key == 'i') { //insta win for testing
+  if (key == 'i') { // Debugging instant win/secret key if the user becomes angry and spams
     for (int row = 0; row < bGrid.length; row ++) {
       for (int col = 0; col < bGrid[row].length; col ++) {
         bGrid[row][col] = null;
       }
     }
   }
-  if (key == 'n' && won == true) {//resets the game and incriments stage value by one
+  if (key == 'n' && won == true) {// Game reset after a win, increase stage counter
     stage ++;
     green = green - 50; // ideally we expect the user to play 5 levels
-    firstrun = true; //makes it the first run so each block gets instantiated again
-    b1.ballvector.x = width/2; //set original ball position
+    firstrun = true; // Cause bGrid to be instantiated again
+    b1.ballvector.x = width/2; // Reset ball position
     b1.ballvector.y = height/2;
     won = false;
-    b1.xspeed = 10; //set original ball speed
+    b1.xspeed = 10; // Reset ball speed
     b1.yspeed = 10;
     //println(stage);
-    lives += stage; //makes lives go up based on the stage so you can go for a bit longer
+    lives += stage; // Increase lives upon reaching higher stages
   }
-  if (key == 'r') { //calls setup/restarts the game if you press this
+  if (key == 'r') { // Manual game reset
     setup();
   }
-  if (key == 'z') { //pausing mechanic
+  if (key == 'z') { // Pause logic
     if (paused == false) {
       paused = true;
     } else {
       paused = false;
     }
   }
-  if (key == CODED) { //so that arrows can be used
+  if (key == CODED) { // Keyboard control
     if (keyCode == LEFT) {
       p.move(0); //moves paddle left
     }
@@ -182,7 +182,7 @@ void keyPressed() {
   }
 }
 void winCheck() {
-  won = true; //sets won to true, will become false if ANY block is still in the grid
+  won = true; // sets won to true, will become false if ANY block is still in the grid
   for (int row = 0; row < bGrid.length; row ++) {
     //println("g1p");
     for (int col = 0; col < bGrid[row].length; col ++) {
