@@ -10,9 +10,11 @@ int stage; // Stage counter for speed of ball
 boolean paused; // Pause state
 ChildApplet[] windows; // array of ChildApplet objects
 int variable; // helper for ChildApplet object generation
-int window = 0; // number of ChildApplet objects populating ChildApplet[]
-int numWindows = 5; // can be modifiable to change # of windows that open
+int window = 0; // Index of next available spot in windows[]
+int numWindows = 5; // can be modifiable to change # of windows that open per iteration of spawnVirus()
 int green = 250; // variable amount for random chance to have a greener background, meaning game background gets progressively redder as you advance
+//int windowStop = 6;
+boolean spawnVirus = false; // Check if 5 windows have been spawned already after a loss
 
 void setup() { // instantiate all global variables to default values
   paused = false;
@@ -30,7 +32,7 @@ void setup() { // instantiate all global variables to default values
   //bGrid = new Block[rows][cols]; // placeholder rows/columns
   //blockgrid(5, 10);
   //println(bGrid.length);
-  windows = new ChildApplet[numWindows];
+  windows = new ChildApplet[100]; // Max out at 100 open ChildApplet windows
 }
 
 //println(bGrid);
@@ -54,7 +56,7 @@ void draw() {
         blockgrid(5, 10);
         collisionDetect(); // checks for any and all collisions
         winCheck(); // checks for wins
-      } else {// if user LOSES
+      } else if (loss) {// if user LOSES
         background(0);
         fill(255, 0, 0);
         textSize(200);
@@ -133,7 +135,7 @@ void collisionDetect() {
 }
 void keyPressed() {
   if (key == ' ' && loss == true) { // Game reset after a loss
-    setup();
+    spawnVirus = false;
     lives = 5;
     loss = false;
     b1.ballvector.x = width/2; // Reset ball position
@@ -149,6 +151,9 @@ void keyPressed() {
         bGrid[row][col] = null;
       }
     }
+  }
+  if (key == 'l') { // Debugging instant lose key
+    loss = true;
   }
   if (key == 'n' && won == true) {// Game reset after a win, increase stage counter
     stage ++;
@@ -200,10 +205,24 @@ String getVariableName() {
 
 void spawnVirus() { // NOT AN ACTUAL VIRUS
   //windows = new ChildApplet[numWindows];
-  if (window < windows.length) {
-    windows[window] = new ChildApplet();
-    window++;
+  if (!spawnVirus) { // checks if ChildApplet windows haven't been spawned
+    int spawned = 0; // Counter for number of windows created in this iteration of the virus
+    while (spawned < numWindows && window < windows.length) {
+      windows[window] = new ChildApplet();
+      window++;
+      spawned++;
+    }
+    spawnVirus = true;
   }
+  //windowStop = windowStop + 5;
+
+  //else if (window + 1 == windows.length) { // Make an expanded version of windows[], shallow/deep copy not needed
+  ////numWindows = numWindows + 5;
+  //  ChildApplet[] newwindows = new ChildApplet[numWindows];
+  //  windows = newwindows;
+  //  window = 0; // Reset counter of open windows
+  //  spawnVirus();
+  //}
   //for (int i = 0; i < windows.length; i++) {
   // windows[i] = new ChildApplet();
   //}
