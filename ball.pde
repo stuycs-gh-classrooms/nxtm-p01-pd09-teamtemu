@@ -1,7 +1,7 @@
 class Ball {
-  PVector ballvector; //vector of the balls position
+  PVector ballvector; // Vector for ball position
   int size;
-  int xspeed, yspeed; //how much the x and y coordes will incriment each move
+  int xspeed, yspeed;
 
   Ball(int x, int y, int sp, int si) {
     ballvector = new PVector(x, y);
@@ -12,12 +12,11 @@ class Ball {
 
   void move() {
     {
-      //YOUR CODE HERE
-      if (ballvector.y <= size/2) { // if ball has made it all the way to top or somehow went past the border
+      if (ballvector.y <= size/2) { // Check if ball has touched top of screen or went past
         yspeed *= -1;
       }// up-down bounce
 
-      if (ballvector.x >= width - size/2 || // if ball has made it all the way to the right/left side or somehow went past the border
+      if (ballvector.x >= width - size/2 || // Check if ball has touched left or right of screen or went past
         ballvector.x <= size/2) {
         xspeed *= -1;
       }// left-right bounce
