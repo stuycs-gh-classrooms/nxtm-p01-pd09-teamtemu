@@ -1,5 +1,5 @@
 ## Project 01: GridRock
-### due `2025-12-12f 08:00` (final; multiple preliminary deadlines)
+### due `2025-12-15f 08:00` (final; multiple preliminary deadlines)
 
 #### GOAL / Overview:
 The purpose of this project is to demonstrate your ability to use the concepts we've covered so far to create a large program. Each project will need to showcase the following:
